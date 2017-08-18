@@ -6,22 +6,23 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Building;
+use App\OthersRoom;
 use Validator;
 
-class BuildingsController extends Controller
+class OthersroomController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $buildings = Building::all();
-        return view('buildings.index')
-                ->with('buildings',$buildings)
-                ->with('title','Index of Buildings');
+        $others = OthersRoom::where('building_id',$id)->get();
+        return view('othersrooms.index')
+                    ->with('othersrooms', $others)
+                    ->with('building_id',$id)
+                    ->with('title','Index of Othersrooms');
     }
 
     /**
@@ -29,10 +30,11 @@ class BuildingsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        return view('buildings.create')
-                    ->with('title','create new building');
+        return view('othersrooms.create')
+                    ->with('building_id',$id)
+                    ->with('title','Create new Other Room');
     }
 
     /**
@@ -41,13 +43,11 @@ class BuildingsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
         $rules =[
-            'building'                  => 'required',
-            'total_room'                 => 'required',
-            'classroom'              => 'required',
-            'labroom' => 'required'
+            'roomNo'                  => 'required',
+            'capacity'                 => 'required'
         ];
         $data = $request->all();
 
@@ -56,14 +56,14 @@ class BuildingsController extends Controller
         if($validation->fails()){
             return redirect()->back()->withErrors($validation)->withInput();
         }else{
-            $building = new Building;
-            $building->name = $data["building"];
-            $building->total_room = $data["total_room"];
-            $building->classroom = $data["classroom"];
-            $building->labroom = $data["labroom"];
 
-            if($building->save()){
-                return redirect()->route('building.index')
+            $otherRoom = new OthersRoom;
+            $otherRoom->building_id = $id;
+            $otherRoom->roomNo = $data["roomNo"];
+            $otherRoom->capacity = $data["capacity"];
+
+            if($otherRoom->save()){
+                return redirect()->route('building.others',$id)
                             ->with('success','Created successfully.');
             }else{
                 return redirect()->route('dashboard')
@@ -91,8 +91,8 @@ class BuildingsController extends Controller
      */
     public function edit($id)
     {
-        $building = Building::find($id);
-        return view('buildings.edit')->with('building',$building)->with('title','Edit Building');
+        $room = OthersRoom::find($id);
+        return view('othersrooms.edit')->with('otherRoom',$room)->with('title','Edit Others Room Info');
     }
 
     /**
@@ -105,10 +105,8 @@ class BuildingsController extends Controller
     public function update(Request $request, $id)
     {
         $rules =[
-            'building'                  => 'required',
-            'total_room'                 => 'required',
-            'classroom'              => 'required',
-            'labroom'   => 'required'
+            'roomNo'                  => 'required',
+            'capacity'                 => 'required'
         ];
         $data = $request->all();
 
@@ -117,15 +115,15 @@ class BuildingsController extends Controller
         if($validation->fails()){
             return redirect()->back()->withErrors($validation)->withInput();
         }else{
-            $building = Building::find($id);
-            $building->name = $data["building"];
-            $building->total_room = $data["total_room"];
-            $building->classroom = $data["classroom"];
-            $building->labroom = $data["labroom"];
 
-            if($building->save()){
-                return redirect()->route('building.index')
-                            ->with('success','Updated successfully.');
+            $otherRoom = OthersRoom::find($id);
+            $otherRoom->building_id = $id;
+            $otherRoom->roomNo = $data["roomNo"];
+            $otherRoom->capacity = $data["capacity"];
+
+            if($otherRoom->save()){
+                return redirect()->route('building.others',$otherRoom->building_id)
+                            ->with('success','Created successfully.');
             }else{
                 return redirect()->route('dashboard')
                             ->with('error',"Something went wrong.Please Try again.");

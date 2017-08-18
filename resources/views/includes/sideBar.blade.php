@@ -3,36 +3,26 @@
 
             <!-- brand -->
             <div class="logo">
-                <a href="#" class="logo-expanded">
+                <a href="{!! route('dashboard') !!}" class="logo-expanded">
                     <i class="ion-social-buffer"></i>
-                    <span href="{!!route('dashboard')!!}" class="nav-label">{!! Config::get('customConfig.names.siteName')!!}</span>
+                    <span class="nav-label">{!! Config::get('customConfig.names.siteName')!!}</span>
 
                 </a>
             </div>
             <!-- / brand -->
 
-
             <!-- Navbar Start -->
             <nav class="navigation">
                 <ul class="list-unstyled">
 
-                     <li class="{!! Menu::areActiveURLs(['dashboard', 'change-password']) !!}"><a href="#"><i class="ion-flask"></i> <span class="nav-label">UI Elements</span></a>
-                        <ul class="list-unstyled">
+                     
 
-                            <li class="{!! Menu::isActiveURL('dashboard') !!}">
-                                <a href="{!!  URL::to( 'dashboard') !!}">Dashboard</a>
-                            </li>
-
-                            <li class="{!! Menu::isActiveURL('change-password') !!}">
-                                <a href="{!!  URL::to( 'change-password') !!}">Password Change</a>
-                            </li>
-                        </ul>
-                    </li>
+                    <li><a href="{!! URL::to('dashboard') !!}"><i class="ion-grid"></i>Dashboard</a></li>
+                    <li><a href="{!!  URL::to( 'change-password') !!}"><i class="ion-grid"></i>Change Password</a></li>
+                    <li><a href="{!! URL::to('building/show/all') !!}"><i class="ion-grid"></i>All Buildings</a></li>
 
 
-
-
-                    <li class="has-submenu"><a href="#"><i class="ion-compose"></i> <span class="nav-label">Forms</span></a>
+                    <!-- <li class="has-submenu"><a href="#"><i class="ion-compose"></i> <span class="nav-label">Forms</span></a>
                         <ul class="list-unstyled">
                             <li><a href="#">General Elements</a></li>
                             <li><a href="#">Form Validation</a></li>
@@ -74,7 +64,7 @@
                             <li><a href="gmap.html"> Google Map</a></li>
                             <li><a href="vector-map.html"> Vector Map</a></li>
                         </ul>
-                    </li>
+                    </li> -->
 
                 </ul>
             </nav>

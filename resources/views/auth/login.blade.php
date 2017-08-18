@@ -12,7 +12,7 @@
 <div class="wrapper-page animated fadeInDown">
     <div class="panel panel-color panel-primary">
         <div class="panel-heading">
-            <h3 class="text-center m-t-10"> Sign In to <strong>Laravel 5.1</strong> </h3>
+            <h3 class="text-center m-t-10"> Sign In to <strong>IMS</strong> </h3>
         </div>
         <br>
              @include('includes.alert')
@@ -33,7 +33,7 @@
 
 
 
-        <div class="form-group m-t-30">
+        <!-- div class="form-group m-t-30">
 
                 <div class="col-sm-5 ">
                     <label class="cr-styled">
@@ -48,7 +48,7 @@
                 <a data-toggle="modal" href="#myModal"><i class="fa fa-lock m-r-5"></i> Forgot your password?</a>
             </div>
 
-        </div>
+        </div> -->
 
         <div class="form-group text-right">
             <br>
@@ -57,7 +57,7 @@
                 </div>
         </div>
 
-
+<!-- 
 
 
 
@@ -68,7 +68,7 @@
 
         <div class="login-social-link">
             <a href="{{ route('login/fb') }}" class="btn btn-primary"><i class="fa fa-facebook"></i> Facebook</a>
-       <!-- <a href="#" class="btn btn-info"><i class="fa fa-twitter"></i>Twitter</a> -->
+       <a href="#" class="btn btn-info"><i class="fa fa-twitter"></i>Twitter</a>
             <a href="{{ route('login/gp') }}" class="btn btn-danger"><i class="fa fa-google-plus"></i> Google</a>
         </div>
        </center>
@@ -78,11 +78,11 @@
         <div class="registration">
             <br>
             Don't have an account yet?
-            <a class="" href="{{ route('user.create') }}">
+            <a class="" href="#">
                 Create an account
             </a>
         </div>
-
+ -->
 
         {!! Form::close() !!}
 

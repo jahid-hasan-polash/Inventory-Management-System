@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Building extends Model
+class Classroom extends Model
 {
     //
 }

@@ -6,22 +6,23 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Building;
+use App\Labroom;
 use Validator;
 
-class BuildingsController extends Controller
+class LabroomController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $buildings = Building::all();
-        return view('buildings.index')
-                ->with('buildings',$buildings)
-                ->with('title','Index of Buildings');
+        $labs = Labroom::where('building_id',$id)->get();
+        return view('labroom.index')
+                    ->with('labs', $labs)
+                    ->with('building_id',$id)
+                    ->with('title','Index of Labrooms');
     }
 
     /**
@@ -29,10 +30,11 @@ class BuildingsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        return view('buildings.create')
-                    ->with('title','create new building');
+        return view('labroom.create')
+                    ->with('building_id',$id)
+                    ->with('title','Create new Labroom');
     }
 
     /**
@@ -41,13 +43,11 @@ class BuildingsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         $rules =[
-            'building'                  => 'required',
-            'total_room'                 => 'required',
-            'classroom'              => 'required',
-            'labroom' => 'required'
+            'roomNo'                  => 'required',
+            'capacity'                 => 'required'
         ];
         $data = $request->all();
 
@@ -56,14 +56,14 @@ class BuildingsController extends Controller
         if($validation->fails()){
             return redirect()->back()->withErrors($validation)->withInput();
         }else{
-            $building = new Building;
-            $building->name = $data["building"];
-            $building->total_room = $data["total_room"];
-            $building->classroom = $data["classroom"];
-            $building->labroom = $data["labroom"];
 
-            if($building->save()){
-                return redirect()->route('building.index')
+            $labroom = new Labroom;
+            $labroom->building_id = $id;
+            $labroom->roomNo = $data["roomNo"];
+            $labroom->capacity = $data["capacity"];
+
+            if($labroom->save()){
+                return redirect()->route('building.labroom',$id)
                             ->with('success','Created successfully.');
             }else{
                 return redirect()->route('dashboard')
@@ -91,8 +91,8 @@ class BuildingsController extends Controller
      */
     public function edit($id)
     {
-        $building = Building::find($id);
-        return view('buildings.edit')->with('building',$building)->with('title','Edit Building');
+        $room = Labroom::find($id);
+        return view('labroom.edit')->with('labroom',$room)->with('title','Edit Labroom Info');
     }
 
     /**
@@ -105,10 +105,8 @@ class BuildingsController extends Controller
     public function update(Request $request, $id)
     {
         $rules =[
-            'building'                  => 'required',
-            'total_room'                 => 'required',
-            'classroom'              => 'required',
-            'labroom'   => 'required'
+            'roomNo'                  => 'required',
+            'capacity'                 => 'required'
         ];
         $data = $request->all();
 
@@ -117,15 +115,14 @@ class BuildingsController extends Controller
         if($validation->fails()){
             return redirect()->back()->withErrors($validation)->withInput();
         }else{
-            $building = Building::find($id);
-            $building->name = $data["building"];
-            $building->total_room = $data["total_room"];
-            $building->classroom = $data["classroom"];
-            $building->labroom = $data["labroom"];
 
-            if($building->save()){
-                return redirect()->route('building.index')
-                            ->with('success','Updated successfully.');
+            $labroom = Labroom::find($id);
+            $labroom->roomNo = $data["roomNo"];
+            $labroom->capacity = $data["capacity"];
+
+            if($labroom->save()){
+                return redirect()->route('building.labroom',$labroom->building_id)
+                            ->with('success','Created successfully.');
             }else{
                 return redirect()->route('dashboard')
                             ->with('error',"Something went wrong.Please Try again.");
