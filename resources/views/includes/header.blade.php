@@ -6,7 +6,7 @@
 
         <link rel="shortcut icon" href="img/favicon_1.ico">
 
-        <title>{!! $title !!} - {!! Config::get('customConfig.names.siteName')!!}</title>
+        <title>{!! $title !!}</title>
 
 
 

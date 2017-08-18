@@ -19,8 +19,8 @@ Route::get('/', function () {
 Route::group(['middleware' => 'guest'], function(){
 	Route::controller('password', 'RemindersController');
 	Route::get('login', ['as'=>'login','uses' => 'Auth\AuthController@login']);
-	Route::get('user/create', ['as'=>'user.create','uses' => 'UsersController@create']);
-	Route::post('user/store', ['as'=>'user.store','uses' => 'UsersController@store']);
+	// Route::get('user/create', ['as'=>'user.create','uses' => 'UsersController@create']);
+	// Route::post('user/store', ['as'=>'user.store','uses' => 'UsersController@store']);
 	Route::post('login', array('uses' => 'Auth\AuthController@doLogin'));
 
 
@@ -42,66 +42,34 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::post('change-password', array('as' => 'password.doChange', 'uses' => 'Auth\AuthController@doChangePassword'));
 
 
+	// Now starts the routes
+	Route::get('building/show/all', ['as'=>'building.index','uses' => 'BuildingsController@index']);
+	Route::get('building/create', ['as'=>'building.create','uses' => 'BuildingsController@create']);
+	Route::post('building/create', ['as' => 'building.store','uses' => 'BuildingsController@store']);
+	Route::get('building/edit/{id}', ['as'=>'building.edit','uses' => 'BuildingsController@edit']);
+	Route::put('building/update/{id}', ['as'=>'building.update','uses' => 'BuildingsController@update']);
+
+	Route::get('building/{id}/classrooms', ['as'=>'building.classroom','uses' => 'ClassroomController@index']);
+	Route::get('building/{id}/labrooms', ['as'=>'building.labroom','uses' => 'LabroomController@index']);
+	Route::get('building/{id}/other_rooms', ['as'=>'building.others','uses' => 'OthersroomController@index']);
+
+	Route::get('building/{id}/classroom/create', ['as'=>'classroom.create','uses' => 'ClassroomController@create']);
+	Route::post('building/{id}/classroom/create', ['as' => 'classroom.store','uses' => 'ClassroomController@store']);
+	Route::get('classroom/edit/{id}', ['as' => 'classroom.edit','uses' => 'ClassroomController@edit']);
+	Route::put('classroom/update/{id}', ['as' => 'classroom.update','uses' => 'ClassroomController@update']);
+	
+	Route::get('building/{id}/labroom/create', ['as'=>'labroom.create','uses' => 'LabroomController@create']);
+	Route::post('building/{id}/labroom/create', ['as' => 'labroom.store','uses' => 'LabroomController@store']);
+	Route::get('labroom/edit/{id}', ['as'=>'labroom.edit','uses' => 'LabroomController@edit']);
+	Route::put('labroom/update/{id}', ['as' => 'labroom.update','uses' => 'LabroomController@update']);
+
+	Route::get('building/{id}/otherRoom/create', ['as'=>'otherRoom.create','uses' => 'OthersroomController@create']);
+	Route::post('building/{id}/otherRoom/create', ['as' => 'otherRoom.store','uses' => 'OthersroomController@store']);
+	Route::get('otherRoom/edit/{id}', ['as'=>'otherRoom.edit','uses' => 'OthersroomController@edit']);
+	Route::put('otherRoom/update/{id}', ['as' => 'otherRoom.update','uses' => 'OthersroomController@update']);
+
 });
 
-
-
-
-
-Route::get('profile1',function(){
-	return View::make('template.profile')->with('title','Profile');
-});
-
-Route::get('timeline',function(){
-	return View::make('template.timeline')->with('title','Timeline');
-});
-
-Route::get('widgets',function(){
-	return View::make('template.widgets')->with('title','Widgets');
-});
-
-Route::get('portlets',function(){
-	return View::make('template.portlets')->with('title','Portlets');
-});
-
-Route::get('panel',function(){
-	return View::make('template.panel')->with('title','Panel');
-});
-
-Route::get('chart_x',function(){
-	return View::make('template.chart_x')->with('title','Chart_x');
-});
-
-
-Route::get('index2',function(){
-	return View::make('template.dashboard')->with('title','Dashboard');
-});
-
-Route::get('gmap',function(){
-	return View::make('template.gmap')->with('title','GMap');
-});
-
-Route::get('friends',function(){
-	return View::make('template.friends')->with('title','Friends');
-});
-
-Route::get('adForm',function(){
-	return View::make('template.advanced_form')->with('title','Advanced Form');//problem
-});
-
-Route::get('form-wizard',function(){
-	return View::make('template.form_wizard')->with('title','Form Wizard');
-});
-
-
-Route::get('dataTable',function(){
-	return View::make('template.datatable')->with('title','Data Table');
-});
-
-
-Route::get('EditableDataTable',function(){
-	return View::make('template.editDataTable')->with('title','Editable Data Table');
-});
 
 
 
